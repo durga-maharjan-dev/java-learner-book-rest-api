@@ -1,5 +1,6 @@
 package javalearner.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javalearner.comparator.SortingByNameComparator;
 import javalearner.dto.BookDTO;
 import javalearner.exception.BookNotFoundException;
 import javalearner.service.BookService;
@@ -58,6 +60,15 @@ public class BookController {
 		this.bookService.deleteById(id);
 		return new ResponseEntity<String>("Alert: A book record deleted!", HttpStatus.OK);
 	}
+	
+	@GetMapping("/book/sortingByBookName")
+	public ResponseEntity<List<BookDTO>> sortingByBookName(){
+		List<BookDTO> dtoList = this.bookService.getBooks();
+		Collections.sort(dtoList, new SortingByNameComparator());
+		System.out.println(dtoList);
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
+	}
+	
 	
 
 }
