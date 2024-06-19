@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javalearner.comparator.SortingByNameComparator;
+import javalearner.comparator.SortingByBookPriceComparator;
+import javalearner.comparator.SortingByBookNameComparator;
 import javalearner.dto.BookDTO;
 import javalearner.exception.BookNotFoundException;
 import javalearner.service.BookService;
@@ -64,8 +65,16 @@ public class BookController {
 	@GetMapping("/book/sortingByBookName")
 	public ResponseEntity<List<BookDTO>> sortingByBookName(){
 		List<BookDTO> dtoList = this.bookService.getBooks();
-		Collections.sort(dtoList, new SortingByNameComparator());
-		System.out.println(dtoList);
+		Collections.sort(dtoList, new SortingByBookNameComparator());
+		System.out.println("Contoller: "+ dtoList);
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
+	}
+	
+	@GetMapping("/book/sortingByBookPrice")
+	public ResponseEntity<List<BookDTO>> sortingByBookPrice(){
+		List<BookDTO> dtoList = this.bookService.getBooks();
+		Collections.sort(dtoList, new SortingByBookPriceComparator());
+		System.out.println("Contoller: "+ dtoList);
 		return new ResponseEntity<>(dtoList, HttpStatus.OK);
 	}
 	

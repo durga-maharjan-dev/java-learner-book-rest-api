@@ -31,15 +31,16 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<BookDTO> getBooks() {
 		List<Book> bookList = this.bookRepository.findAll();
-		System.out.println(bookList);
-		
+		System.out.println("Service Layer: "+bookList);
 		List<BookDTO> dtoList = new ArrayList<>();
 		BookDTO dto =null;
 		
 		for(Book book: bookList) {
 			dto = new BookDTO();
 			BeanUtils.copyProperties(book, dto);
+			System.out.println("Service: "+dto);
 			dtoList.add(dto);
+			
 		}
 		return dtoList;
 	}
